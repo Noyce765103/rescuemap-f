@@ -1,23 +1,22 @@
 <template>
-  <div id="app">
-    <div class="header-wrapper">
+  <el-container id="app">
+    <el-header class="header-wrapper">
       <p>救援地图</p>
-    </div>
+    </el-header>
     <router-view class="main-content"></router-view>
-    <bottom-nav></bottom-nav>
-  </div>
+    <BottomNav></BottomNav>
+  </el-container>
 </template>
 
 <style>
 #app {
   height: 100vh;
-  display: flex;
-  flex-direction: column;
 }
 .header-wrapper {
   height: 3.125rem;
   background-color: #f8f8f8;
 }
+
 .main-content {
   flex: 1;
 }

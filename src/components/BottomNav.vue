@@ -1,19 +1,17 @@
 <template>
-  <div>
-    <div class="nav-container">
-      <router-link class="link" to="/">
-        <div class="iconfont">&#xe600;</div>
-        <p>首页</p>
-      </router-link>
-      <router-link class="link" to="/about">
-        <div class="iconfont">&#xe68a;</div>
-        <p>救援地图</p>
-      </router-link>
-      <router-link class="link" to="/about">
-        <div class="iconfont">&#xe601;</div>
-        <p>个人中心</p>
-      </router-link>
-    </div>
+  <div class="nav-container">
+    <router-link class="link" to="/">
+      <div class="iconfont">&#xe600;</div>
+      <p>首页</p>
+    </router-link>
+    <router-link class="link" to="/map">
+      <div class="iconfont">&#xe68a;</div>
+      <p>救援地图</p>
+    </router-link>
+    <router-link class="link" to="/personal">
+      <div class="iconfont">&#xe601;</div>
+      <p>个人中心</p>
+    </router-link>
   </div>
 </template>
 
@@ -32,10 +30,14 @@ export default {
   color: #1890ff;
 }
 .nav-container {
-  height: 2.4rem;
   display: flex;
   justify-content: space-between;
+  padding-top: 10px;
+  padding-bottom: 30px;
   text-align: center;
+  position: sticky;
+  bottom: 0;
+  background: whitesmoke;
 }
 .link {
   flex: 1;
