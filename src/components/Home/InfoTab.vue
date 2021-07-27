@@ -10,7 +10,7 @@ export default {
   props: {
     rescueInfo: Array,
   },
-}
+};
 </script>
 
 <style></style>

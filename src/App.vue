@@ -29,8 +29,8 @@
 }
 </style>
 <script>
-import BottomNav from './components/BottomNav'
+import BottomNav from './components/BottomNav';
 export default {
   components: { BottomNav },
-}
+};
 </script>
