@@ -5,11 +5,20 @@
     </div>
     <div class="button-container">
       <div class="btn-line-one">
-        <el-button class="btn-style" type="primary" icon="el-icon-first-aid-kit">发起求助</el-button>
-        <el-button class="btn-style" type="primary" icon="el-icon-help">发起救援</el-button>
+        <el-button class="btn-style" type="primary" icon="el-icon-first-aid-kit"
+          >发起求助</el-button
+        >
+        <el-button class="btn-style" type="primary" icon="el-icon-help"
+          >发起救援</el-button
+        >
       </div>
       <div class="btn-line-two">
-        <el-button class="btn-style" type="primary" icon="el-icon-warning-outline">提供帮助</el-button>
+        <el-button
+          class="btn-style"
+          type="primary"
+          icon="el-icon-warning-outline"
+          >提供帮助</el-button
+        >
       </div>
     </div>
   </div>
@@ -21,40 +30,37 @@ import HelloWorld from '@/components/HelloWorld.vue'
 
 export default {
   name: 'Home',
-  components: {
-
-  }
+  components: {},
 }
 </script>
 
 <style>
-.title-container{
+.title-container {
   width: 100vw;
   height: 4rem;
   padding: 0 1rem 0 1rem;
 }
-.title{
+.title {
   font-size: 5em;
   line-height: 4rem;
   font-weight: bold;
 }
-.button-container{
+.button-container {
   padding: 0 1rem 0 1rem;
   height: 8rem;
-
 }
-.btn-line-one{
+.btn-line-one {
   height: 2.5rem;
   text-align: justify;
   display: flex;
   justify-content: space-between;
 }
 
-.btn-line-two{
+.btn-line-two {
   text-align: center;
   margin-top: 1.5rem;
 }
-.button-container .btn-style{
+.button-container .btn-style {
   width: 8.5rem;
 }
 </style>

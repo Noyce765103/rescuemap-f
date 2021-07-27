@@ -19,29 +19,29 @@
 
 <script>
 export default {
-  name: 'BottomNav'
+  name: 'BottomNav',
 }
 </script>
 
 <style scoped>
-.nav-container a{
+.nav-container a {
   color: #acacac;
-  font-size: .8rem;
+  font-size: 0.8rem;
 }
-.nav-container a.router-link-exact-active{
+.nav-container a.router-link-exact-active {
   color: #1890ff;
 }
-.nav-container{
+.nav-container {
   height: 2.4rem;
-  display:flex;
+  display: flex;
   justify-content: space-between;
   text-align: center;
 }
-.link{
-  flex:1;
+.link {
+  flex: 1;
   height: 1.2rem;
 }
-.nav-container .iconfont{
-  padding-bottom: .4rem;
+.nav-container .iconfont {
+  padding-bottom: 0.4rem;
 }
 </style>
