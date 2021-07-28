@@ -8,7 +8,7 @@ import fastClick from 'fastclick';
 import '@/assets/iconfont.css';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
-import VueAMap, {lazyAMapApiLoaderInstance} from "vue-amap";
+import VueAMap from "vue-amap";
 
 
 Vue.config.productionTip = false;

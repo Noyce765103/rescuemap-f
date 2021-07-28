@@ -1,3 +1,4 @@
+
 module.exports = {
   root: true,
   env: {
@@ -26,4 +27,7 @@ module.exports = {
       },
     ],
   },
+  globals: {
+    AMap:'writable'
+  }
 };
