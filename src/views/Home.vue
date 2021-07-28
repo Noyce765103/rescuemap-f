@@ -29,6 +29,7 @@
     <el-row>
       <InfoTab
         :currentTabName="currentInfoTab"
+        :currentTabData="currentInfoTabData"
         @handleTabClick="handleTabClick"
       ></InfoTab>
     </el-row>
@@ -37,6 +38,8 @@
 
 <script>
 import InfoTab from '@/components/Home/InfoTab.vue';
+import http from '../services/http';
+import * as api from '../services/http/api';
 
 export default {
   name: 'Home',
@@ -44,12 +47,29 @@ export default {
   data() {
     return {
       currentInfoTab: 'sos',
+      currentInfoTabData: [],
     };
   },
   methods: {
     handleTabClick(name) {
+      if (name === 'sos') {
+        this.getHelpList();
+      } else if (name === 'rescue') {
+        this.getRescueList();
+      }
       this.currentInfoTab = name;
     },
+    async getHelpList() {
+      const res = await api.getHelpList();
+      this.currentInfoTabData = res.result;
+    },
+    async getRescueList() {
+      const res = await api.getRescueList();
+      this.currentInfoTabData = res.result;
+    },
+  },
+  mounted() {
+    this.getHelpList();
   },
 };
 </script>
