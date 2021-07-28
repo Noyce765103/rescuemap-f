@@ -8,7 +8,8 @@ import fastClick from 'fastclick';
 import '@/assets/iconfont.css';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
-import VueAMap from "vue-amap";
+import VueAMap, {lazyAMapApiLoaderInstance} from "vue-amap";
+
 
 Vue.config.productionTip = false;
 fastClick.attach(document.body);
@@ -20,12 +21,16 @@ new Vue({
 }).$mount('#app');
 
 
-Vue.use(VUEAMap)
+Vue.use(VueAMap)
 
 // 初始化vue-amap
-VUEAMap.initAMapApiLoader({
+VueAMap.initAMapApiLoader({
   // 高德key
   key: '876a67525aa9bd4ca0455bbff07e5859',
+  // 高德默认版本号
+  v: '1.4.4',
   // 插件集合 （插件按需引入）
-  plugin: ['AMap.Geolocation', 'AMap.ElasticMarker']
+  plugin: ['AMap.Geolocation',// 地点定位组件
+    'AMap.ElasticMarker']
+
 })
