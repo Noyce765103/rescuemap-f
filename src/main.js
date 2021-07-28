@@ -20,10 +20,10 @@ new Vue({
 }).$mount('#app');
 
 
-Vue.use(VueAMap)
+Vue.use(VUEAMap)
 
 // 初始化vue-amap
-VueAMap.initAMapApiLoader({
+VUEAMap.initAMapApiLoader({
   // 高德key
   key: '876a67525aa9bd4ca0455bbff07e5859',
   // 插件集合 （插件按需引入）
