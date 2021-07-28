@@ -19,6 +19,7 @@
 
 .main-content {
   flex: 1;
+  padding: 0 10px;
 }
 
 .header-wrapper p {
