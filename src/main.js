@@ -31,6 +31,6 @@ VueAMap.initAMapApiLoader({
   // 插件集合 （插件按需引入）
   plugin: [
     'AMap.Geolocation', // 地点定位组件
-    'AMap.ElasticMarker',
+    'AMap.Geocoder',// 地址到坐标双向转换
   ],
 });

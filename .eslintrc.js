@@ -28,6 +28,6 @@ module.exports = {
     ],
   },
   globals: {
-    AMap:'writable'
+    AMap:'readonly'
   }
 };
