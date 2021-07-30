@@ -8,7 +8,7 @@
       <div class="iconfont">&#xe68a;</div>
       <p>救援地图</p>
     </router-link>
-    <router-link class="link" to="/personal">
+    <router-link class="link" to="/user">
       <div class="iconfont">&#xe601;</div>
       <p>个人中心</p>
     </router-link>

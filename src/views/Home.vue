@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="page--home">
     <div class="title-container">
       <p class="title">救援地图</p>
     </div>
@@ -10,9 +10,14 @@
             class="btn-style"
             type="primary"
             icon="el-icon-first-aid-kit"
+            @click="$router.push({ name: 'Form', query: { type: 'sos' } })"
             >发起求助</el-button
           >
-          <el-button class="btn-style" type="primary" icon="el-icon-help"
+          <el-button
+            class="btn-style"
+            type="primary"
+            icon="el-icon-help"
+            @click="$router.push({ name: 'Form', query: { type: 'rescue' } })"
             >发起救援</el-button
           >
         </div>
