@@ -28,6 +28,7 @@ module.exports = {
     ],
   },
   globals: {
-    AMap:'readonly'
+    AMap:'readonly',
+    AMapUI:'readonly',
   }
 };

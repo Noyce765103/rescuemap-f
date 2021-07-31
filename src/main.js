@@ -33,4 +33,5 @@ VueAMap.initAMapApiLoader({
     'AMap.Geolocation', // 地点定位组件
     'AMap.Geocoder',// 地址到坐标双向转换
   ],
+  uiVersion: '1.1',
 });

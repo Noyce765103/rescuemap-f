@@ -34,31 +34,8 @@
           {{ data.SOSTime }}
         </div>
       </el-col>
-
-      <el-col class="info-card-description" :xs="24">
-        <div class="info-card-description-title">详细描述</div>
-        <div class="info-card-description-content ">
-          <div
-              class="info-description"
-              :class="collapsed && 'info-description-short'"
-          >
-            {{ data.description }}
-          </div>
-          <div
-              class="info-description-more-button"
-              v-show="collapsed"
-              @click="collapsed = !collapsed"
-          >
-            <i class="el-icon-caret-bottom"></i>展开
-          </div>
-          <div
-              class="info-description-more-button"
-              v-show="!collapsed"
-              @click="collapsed = !collapsed"
-          >
-            <i class="el-icon-caret-top"></i>折叠
-          </div>
-        </div>
+      <el-col class="info-card-description" style="text-align: right" :xs="24">
+          <el-button type="text" @click="handleHelpConfirm(data.name)">前往救援</el-button>
       </el-col>
     </el-row>
 
@@ -115,31 +92,6 @@
         </div>
       </el-col>
 
-      <el-col class="info-card-description" :xs="24">
-        <div class="info-card-description-title">详细描述</div>
-        <div class="info-card-description-content ">
-          <div
-              class="info-description"
-              :class="collapsed && 'info-description-short'"
-          >
-            {{ data.description }}
-          </div>
-          <div
-              class="info-description-more-button"
-              v-show="collapsed"
-              @click="collapsed = !collapsed"
-          >
-            <i class="el-icon-caret-bottom"></i>展开
-          </div>
-          <div
-              class="info-description-more-button"
-              v-show="!collapsed"
-              @click="collapsed = !collapsed"
-          >
-            <i class="el-icon-caret-top"></i>折叠
-          </div>
-        </div>
-      </el-col>
     </el-row>
   </div>
 </template>
@@ -149,7 +101,7 @@
 import {InfoCardTypes} from "../Home/InfoCard";
 
 export default {
-  name: 'DetailCard',
+  name: 'DetailWindow',
   props: {
     data: {
       type: Object,
@@ -165,17 +117,23 @@ export default {
       InfoCardTypes: InfoCardTypes,
     };
   },
+  methods:{
+    handleHelpConfirm(id){
+     console.log("function:handleHelpConfirm("+id+")")
+      this.$emit('handleConfirmation', id);
+    }
+  }
 };
 </script>
 
-<style>
+<style scoped>
 .info-card {
   box-shadow: 0 1px 4px 1px rgba(198, 198, 198, 0.2);
   border: solid 2px whitesmoke;
-  border-radius: 10px;
-  min-height: 240px;
+  border-radius: 5px;
+  min-height: 100px;
   margin: 0 6px 20px 6px;
-  padding: 25px 20px 25px 15px;
+  padding: 10px 5px 10px 5px;
 }
 
 .info-card-description {
@@ -183,11 +141,11 @@ export default {
   flex-direction: row;
   font-size: 14px;
   line-height: 18px;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .info-card-description-title {
-  min-width: 65px;
+  min-width: 60px;
   text-align: right;
   margin-right: 6px;
   font-weight: 500;

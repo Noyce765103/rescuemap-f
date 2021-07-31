@@ -4,23 +4,21 @@
       <div class="btn-line-one">
         <!-- 选中为蓝色,不选为白色   -->
         <el-button :type="markerFilterOn[0]?'primary':'plain'"
-                   size="mini" @click="filterMarker(this.AMAP_MARKER_TYPE.HELP_REQUEST)" round>求救信息
+                   size="mini" @click="filterMarker(amapMarkerTypes.HELP_REQUEST)" round>求救信息
         </el-button>
         <el-button :type="markerFilterOn[1]?'primary':'plain'"
-                   size="mini" @click="filterMarker(this.AMAP_MARKER_TYPE.DANGER_ZONE)" round>险情
+                   size="mini" @click="filterMarker(amapMarkerTypes.DANGER_ZONE)" round>险情
         </el-button>
         <el-button :type="markerFilterOn[2]?'primary':'plain'"
-                   size="mini" @click="filterMarker(this.AMAP_MARKER_TYPE.SHELTER)" round>避难点
+                   size="mini" @click="filterMarker(amapMarkerTypes.SHELTER)" round>避难点
         </el-button>
         <el-button :type="markerFilterOn[3]?'primary':'plain'"
-                   size="mini" @click="filterMarker(this.AMAP_MARKER_TYPE.RESCUE_TEAM)" round>救援队伍
+                   size="mini" @click="filterMarker(amapMarkerTypes.RESCUE_TEAM)" round>救援队伍
         </el-button>
       </div>
     </div>
-    <h1>----------------------↓地图↓--------------------</h1>
-    <div :style="{width:'100%',height:'300px'}">
       <el-amap vid="amap"
-               class="amap-demo"
+               class="amap-main"
                resize-enable="true"
                map-style="dark"
                :plugin="mapPlugins"
@@ -29,20 +27,20 @@
                :center="mapCenter"
                :events="mapEvents">
         <el-amap-info-window
+            auto-move="false"
             is-custom="true"
             :offset="infoWindow.offset"
             :position="infoWindow.pos"
             :visible="infoWindow.visible"
             :events="infoWindow.event">
           <div class="info-box-bg">
-            <info-card :data="cardData"
-                       :type="cardDataType">
-            </info-card>
+            <detail-window :data="cardData"
+                           :type="cardDataType"
+                           @handleConfirmation="handleConfirmation">
+            </detail-window>
           </div>
         </el-amap-info-window>
       </el-amap>
-    </div>
-    <h6>----------------------↑地图↑--------------------</h6>
   </div>
 
 </template>
@@ -50,17 +48,16 @@
 <script>
 import {AMapManager, lazyAMapApiLoaderInstance} from 'vue-amap'
 import * as api from "../services/http/api";
-import InfoCard from "../components/Home/InfoCard";
 import Vue from "vue";
+import DetailWindow from "../components/Map/DetailWindow";
 // 与地图连接的manager实体,需要通过它获取原生AMap.Map对象
 const amapManager = new AMapManager();
 export default {
   name: 'Map',
-  // eslint-disable-next-line vue/no-unused-components
-  components: {InfoCard},
+  components: {DetailWindow},
   data() {
     return {
-      AMAP_MARKER_TYPE:
+      amapMarkerTypes:
           {
             HELP_REQUEST: 0,
             DANGER_ZONE: 1,
@@ -76,6 +73,14 @@ export default {
       // 默认地图中央经纬度,可变
       mapCenter: [121.577, 31.196646],
       mapEvents: {
+        init(map) {
+          AMapUI.loadUI(['control/BasicControl'], function (BasicControl) {
+            // 添加一个缩放控件
+            map.addControl(new BasicControl.Zoom({
+              position: 'rb'
+            }));
+          });
+        },
         'complete': () => {
           lazyAMapApiLoaderInstance.load().then(() => {
             this.drawMarkers()
@@ -90,7 +95,7 @@ export default {
         }
       },
       /* -------------------------------------------------------- */
-      // 标记类别开关:   求救 , 险情 ,避难所, 救援队
+      // 标记类别开关:  求救点, 险情 ,避难所, 救援队
       markerFilterOn: [true, true, true, true],
       // 标记信息总列表
       markerDataList: [],
@@ -99,12 +104,13 @@ export default {
       cardData: Object,
       cardDataType: 0,
       infoWindow: {
-        offset: [0, -10],
+        instance: null,
+        offset: [0, 20],
         pos: [0, 0],
         visible: false,
         event: {
           init(o) {
-            o.setAnchor("top-center")
+            o.setAnchor("top-right")
           }
         }
       },
@@ -113,7 +119,7 @@ export default {
 
   created() {
     lazyAMapApiLoaderInstance.load().then(() => {
-      this.requestData()
+      this.requestData();
     })
   },
 
@@ -139,10 +145,10 @@ export default {
           let iconURL;
           // 有区别的数据在下面初始化
           switch (markerType) {
-            case this.AMAP_MARKER_TYPE.HELP_REQUEST:
+            case this.amapMarkerTypes.HELP_REQUEST:
               iconURL = "//a.amap.com/jsapi_demos/static/demo-center/icons/poi-marker-red.png";
               break;
-            case this.AMAP_MARKER_TYPE.RESCUE_TEAM:
+            case this.amapMarkerTypes.RESCUE_TEAM:
               iconURL = "//a.amap.com/jsapi_demos/static/demo-center/icons/poi-marker-default.png";
               break;
           }
@@ -175,19 +181,22 @@ export default {
       this.amapManager.getMap().setFitView()
     },
 
+    // 响应详情框内 [接取救援任务按钮] 的点击事件
+    handleConfirmation(dataID){
+      alert("按下infoWindow,事件:"+dataID+"已接取");
+    },
     // 回调函数,响应marker的单击事件
     onMarkerClick(event) {
       const map = this.amapManager.getMap();
       // 触发事件marker的坐标
       const markerPos = event.target.getPosition();
-      // 居中放大显示
-      map.setZoomAndCenter(16, markerPos);
-
       // 显示详情窗格
       this.cardData = this.markerDataList[event.target.getExtData().markerIndex];
       this.cardDataType = (this.cardData.markerType === 0 ? 0 : 1);
       this.infoWindow.pos = [markerPos.getLng(), markerPos.getLat()];
       this.infoWindow.visible = true;
+      // 居中放大显示marker
+      map.setZoomAndCenter(16, markerPos);
     },
 
     requestData() {
@@ -205,7 +214,7 @@ export default {
       for (i in tempList) {
         const data = tempList[i]
         // 标记为求救点
-        data.markerType = this.AMAP_MARKER_TYPE.HELP_REQUEST;
+        data.markerType = this.amapMarkerTypes.HELP_REQUEST;
         if (data.pos == null) {
           // 从地址描述获取坐标
           geoCoder.getLocation(tempList[i].location, function (status, result) {
@@ -227,7 +236,7 @@ export default {
       for (i in tempList) {
         const data = tempList[i]
         // 标记为救援队伍
-        data.markerType = this.AMAP_MARKER_TYPE.RESCUE_TEAM;
+        data.markerType = this.amapMarkerTypes.RESCUE_TEAM;
         if (data.pos == null) {
           // 从地址描述获取坐标
           geoCoder.getLocation(tempList[i].location, function (status, result) {
@@ -247,17 +256,17 @@ export default {
 <style scoped>
 .info-box-bg {
   background: #f8f8f8;
-  border-radius: 10px;
+  border-radius: 5px;
 }
 
-.map-container {
+.amap-main{
   width: 100%;
-  height: 100%;
+  height: 70%;
 }
 
 .button-container {
-  padding: 0 1rem 0 1rem;
-  height: 8rem;
+  padding: 1rem 1rem 1rem 1rem;
+  height: 3rem;
 }
 
 .btn-line-one {
