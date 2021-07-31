@@ -30,6 +30,7 @@
                :events="mapEvents">
         <el-amap-info-window
             is-custom="true"
+            :offset="infoWindow.offset"
             :position="infoWindow.pos"
             :visible="infoWindow.visible"
             :events="infoWindow.event">
@@ -66,7 +67,7 @@ export default {
             SHELTER: 2,
             RESCUE_TEAM: 3
           },
-      /* 高德地图主参数 */
+      /* --------------------高德地图主参数------------------------ */
       // 地图用到的插件列表: Geocoder坐标地址互转
       mapPlugins: ['AMap.Geocoder'],
       amapManager,
@@ -88,16 +89,17 @@ export default {
           this.infoWindow.visible = false;
         }
       },
-      // ----------------------------------------------------------------------
+      /* -------------------------------------------------------- */
       // 标记类别开关:   求救 , 险情 ,避难所, 救援队
       markerFilterOn: [true, true, true, true],
       // 标记信息总列表
       markerDataList: [],
-      // ----------------------------------------------------------------------
+      /* -------------------------------------------------------- */
       // 详情窗格
       cardData: Object,
       cardDataType: 0,
       infoWindow: {
+        offset: [0, -10],
         pos: [0, 0],
         visible: false,
         event: {
@@ -243,7 +245,6 @@ export default {
 </script>
 
 <style scoped>
-
 .info-box-bg {
   background: #f8f8f8;
   border-radius: 10px;
@@ -266,4 +267,13 @@ export default {
   justify-content: space-between;
 }
 
+.amap-logo {
+  right: 0 !important;
+  left: auto !important;
+  display: none !important;
+}
+
+.amap-copyright {
+  opacity: 0;
+}
 </style>
