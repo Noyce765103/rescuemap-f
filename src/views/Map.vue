@@ -150,6 +150,7 @@ export default {
   },
 
   methods: {
+    // 绘制marker
     drawMarkers() {
       console.log("function:drawMarkers()")
       // 获取原生高德API的map对象
@@ -191,7 +192,7 @@ export default {
       }
     },
 
-    // 处理 marker类型筛选开关 的 按下 事件
+    // 处理 [marker类型筛选] 的 点击 事件
     filterMarker(buttonID) {
       /* console.log("function:FilterMarker(" + buttonID + ")") */
       // 翻转开关,同时通知Vue更新数据
@@ -203,7 +204,7 @@ export default {
       this.amapManager.getMap().setFitView()
     },
 
-    // 响应详情框内 [接取救援任务按钮] 的点击事件
+    // 响应详情框内 [接取救援任务] 的 点击 事件
     handleConfirmation(dataID) {
       /* console.log("function:handleConfirmation(" + dataID + ")") */
       alert("按下infoWindow,事件:" + dataID + "已接取");
@@ -222,15 +223,18 @@ export default {
       map.setZoomAndCenter(16, markerPos);
     },
 
-
+    // 异步调取数据;http请求应该都在这里
     async requestData() {
+      // 初始化
       this.markerDataList = [];
+      const geoCoder = new AMap.Geocoder({city: "全国"});
+      // temp变量
       let res;
       let tempList;
+      let item;
+      // 获取求救点数据
       res = await api.getHelpList();
       tempList = res.result;
-      const geoCoder = new AMap.Geocoder({city: "全国"});
-      let item;
       for (item in tempList) {
         const data = tempList[item]
         // 标记为求救点
@@ -246,6 +250,7 @@ export default {
         }
         this.markerDataList.push(data);
       }
+      // 获取救援队数据
       res = await api.getRescueList();
       tempList = res.result;
       for (item in tempList) {
@@ -271,8 +276,8 @@ export default {
     showInfoWindow(cardData, pos) {
       this.cardData = cardData;
       this.cardDataType = (this.cardData.markerType === 0 ? 0 : 1);
-      this.infoWindow.pos = pos;
-      this.infoWindow.visible = true;
+      Vue.set(this.infoWindow, "pos", pos);
+      Vue.set(this.infoWindow, "visible", true);
     },
 
     // 根据加载的marker数据计算统计数据,需在marker获取后执行
