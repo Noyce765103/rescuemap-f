@@ -220,7 +220,7 @@ export default {
           [markerPos.getLng(), markerPos.getLat()]
       )
       // 居中放大显示marker
-      map.setZoomAndCenter(16, markerPos);
+      map.setZoomAndCenter(10, markerPos);
     },
 
     // 异步调取数据;http请求应该都在这里
@@ -350,8 +350,6 @@ export default {
 }
 
 .amap-logo {
-  right: 0 !important;
-  left: auto !important;
   display: none !important;
 }
 

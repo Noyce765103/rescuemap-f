@@ -34,11 +34,10 @@
           {{ data.SOSTime }}
         </div>
       </el-col>
-      <el-col class="info-card-description" style="text-align: right" :xs="24">
-          <el-button type="text" @click="handleHelpConfirm(data.name)">前往救援</el-button>
+      <el-col class="info-card-description" :xs="24">
+        <el-button type="text" size="small" @click="handleHelpConfirm(data.name)">前往救援</el-button>
       </el-col>
     </el-row>
-
     <el-row v-if="type === InfoCardTypes.HOME_RESCUE">
       <el-col class="info-card-description" :xs="12">
         <div class="info-card-description-title">联系人</div>
@@ -48,17 +47,9 @@
       <el-col class="info-card-description" :xs="12">
         <div class="info-card-description-title">状态</div>
         <div class="info-card-description-content">
-          <span
-              v-if="data.status === 'available'"
-              class="info-status status-success"
-          >空闲</span
-          >
-          <span v-if="data.status === 'busy'" class=" info-status status-danger"
-          >救援中</span
-          >
-          <span v-if="data.status === 'rest'" class="info-status status-info"
-          >休息中</span
-          >
+          <span v-if="data.status === 'available'" class="info-status status-success">空闲</span>
+          <span v-if="data.status === 'busy'" class=" info-status status-danger">救援中</span>
+          <span v-if="data.status === 'rest'" class="info-status status-info">休息中</span>
         </div>
       </el-col>
 
@@ -66,22 +57,22 @@
         <div class="info-card-description-title">救援装备</div>
         <div class="info-card-description-content">
           <el-tag
-              v-for="(tool, index) in data.rescueTools"
+              v-for="(tool, index) in data.rescueTools.slice(0,4)"
               :key="index"
-              size="small"
-              class="info-rescue-tool-item"
-          >{{ tool }}
-          </el-tag
-          >
+              size="mini"
+              class="info-rescue-tool-item">
+            {{ tool }}
+          </el-tag>
+          <span v-if="data.rescueTools.length > 4">…</span>
         </div>
       </el-col>
 
       <el-col class="info-card-description" :xs="24">
         <div class="info-card-description-title">联系电话</div>
         <div class="info-card-description-content">
-          <a :href="`tel:${data.phone}`" class="info-card-phone-link">{{
-              data.phone
-            }}</a>
+          <a :href="`tel:${data.phone}`" class="info-card-phone-link">
+            {{ data.phone }}
+          </a>
         </div>
       </el-col>
 
@@ -117,9 +108,9 @@ export default {
       InfoCardTypes: InfoCardTypes,
     };
   },
-  methods:{
-    handleHelpConfirm(id){
-     console.log("function:handleHelpConfirm("+id+")")
+  methods: {
+    handleHelpConfirm(id) {
+      console.log("function:handleHelpConfirm(" + id + ")")
       this.$emit('handleConfirmation', id);
     }
   }
