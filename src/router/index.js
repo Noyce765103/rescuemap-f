@@ -3,8 +3,7 @@ import VueRouter from 'vue-router';
 
 const Home = () => import(/* webpackChunkName: "home" */ '../views/Home.vue');
 const Map = () => import(/* webpackChunkName: "map" */ '../views/Map.vue');
-const User = () =>
-  import(/* webpackChunkName: "user" */ '../views/Personal.vue');
+const Personal = () => import(/* webpackChunkName: "user" */ '../views/Personal.vue');
 
 Vue.use(VueRouter);
 
@@ -20,9 +19,9 @@ const routes = [
     component: Map,
   },
   {
-    path: '/user',
-    name: 'User',
-    component: User,
+    path: '/personal',
+    name: 'Personal',
+    component: Personal,
   },
 ];
 
